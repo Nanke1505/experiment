@@ -1,9 +1,9 @@
-fromfrom os import environ
+from os import environ
 
 SESSION_CONFIGS = [
     dict(
-        name='Experiment',
-        app_sequence=['Introduction', 'Decision', 'Questionnaire'],
+        name='demo',
+        app_sequence=['Decision'],
         num_demo_participants=3,
     ),
 ]

@@ -1,0 +1,218 @@
+{{ block content }}
+<!-- Here you have the HTML code of the page -->
+<!-- Here is where you modify which things you have in your page -->
+<div id="game-body">
+    <div id="game-table">
+        <div class="row">
+            <div class="cell"></div>
+            {{ for opt in lOptions }}
+                <div class="cell"> {{ opt }}</div>
+            {{ endfor }}
+        </div>
+        {{ for attr in lAttributes }}
+            <div class="row">
+                <div class="cell"> {{ attr.name }} </div>
+                {{ with outer_counter=forloop.counter }}
+                {{ for a in attr.lValues }} 
+                
+                    <button type="button" class="cell visual-btn row-{{outer_counter}} col-{{forloop.counter}} r{{outer_counter}}c{{forloop.counter}}" id="r{{outer_counter}}c{{forloop.counter}}"> 
+                        <div class="cell-content"> {{ a }} </div>
+                        <div class="cell-hidden hidden">  </div>
+                    </button>
+                {{ endfor }}
+                {{ endwith }}
+            </div>
+
+        {{ endfor }}
+        <div class="row">
+            <div class="cell"></div>
+            <button type="button" onclick="chooseOption('A')" class="cell choice-btn"> Option A </button>
+            <button type="button" onclick="chooseOption('B')" class="cell choice-btn"> Option B </button>
+        </div>
+    </div>
+</div>
+
+{{ endblock }}
+
+{{ block styles }}
+<style> 
+/* Here you put CSS code for the design of your task  */
+/* This is the part where you modify how things look */
+.debug-info {
+    /* If something is not working, change none for block */
+    display: none;
+}
+
+#game-table {
+    position: absolute;
+    transform: translate(-50%,-50%);
+    display: flex;
+    top: 50vh;
+    left: 50vw;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-grow: 1;
+}
+
+.cell {
+    margin: 10px;
+    width: 10vw;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hidden {
+    display: none;
+}
+
+</style>
+{{ endblock }}
+
+{{ block scripts }}
+<script> 
+// Here comes the javascript (js) code for your program  
+// This is the part where you modify how things change 
+
+// Constants and variables
+const sActivation   = js_vars.sActivation;
+const sDisplayMode  = js_vars.sDisplayMode;
+const GameBody      = document.getElementById("game-body");
+const lVars         = ["sButtonClick","sTimeClick","dRT","iDec"];
+var Inputs          = {};
+var tStart, tTimeIn, sCurrentActive;
+
+// Initialize everything after all the files are loaded
+document.addEventListener("DOMContentLoaded",()=>{
+    // Create necessary inputs and store them in a dictionary
+    for (let i=0;i<lVars.length;i++) {
+        let input        = document.createElement("input");
+        input.type       = 'hidden';
+        input.name       = lVars[i];
+        input.id         = lVars[i];
+        GameBody.appendChild(input);
+        Inputs[lVars[i]] = input;
+    }
+    // Initialize Variables
+    tStart = tTimeIn = new Date().getTime();
+    Inputs.sButtonClick.value = sCurrentActive = "NA";
+    Inputs.sTimeClick.value ="0";
+    // Add visual tracers to buttons
+    let lButtons = document.getElementsByClassName("visual-btn");
+    for (let i=0;i<lButtons.length;i++) {
+        addVisualTracer(lButtons[i]);
+    }
+    HideEverything();
+    
+})
+// ----------------------------------------------------- //
+//  Function:     save RT and submit form  
+// ----------------------------------------------------- //
+function chooseOption(val) {
+    Inputs["iDec"].value = val;
+    endTurn();
+}
+
+// ----------------------------------------------------- //
+//  Function:     save RT and submit form  
+// ----------------------------------------------------- //
+function endTurn() {
+    let now = new Date().getTime();
+    Inputs["dRT"].value = now - tStart;
+    document.getElementById("form").submit()
+}
+
+function addVisualTracer(btn) {
+    let sDisplay = btn.id;
+    lDims = sDisplay.replace('r','').replace('c','').split('');
+    switch (sDisplayMode) {
+        case 'column':
+            sDisplay = `col-${lDims[1]}`;
+            break
+            case 'row': 
+            sDisplay = `row-${lDims[0]}`;
+            break  
+        case 'self':
+        default: 
+            break 
+    }
+
+    switch (sActivation){
+        case 'click': 
+        btn.addEventListener("click", ()=> {
+            newIn(sDisplay);
+        })
+        break;
+        case 'mouseover': 
+        btn.addEventListener("mouseenter", ()=> {
+            newIn(sDisplay);
+        })
+        btn.addEventListener("mouseleave", ()=> {
+            newOut();
+        })
+        break; 
+
+        default:
+            console.log('wrong activation name');
+            break;
+    }
+}
+// ----------------------------------------------------- //
+//  Function:     Register new revealed info  
+// ----------------------------------------------------- //
+function newIn(sDisplayClass) {
+    HideEverything();
+    DisplayContent(sDisplayClass);
+    if (sDisplayClass!=sCurrentActive) {
+        console.log(sDisplayClass)
+        tTimeIn = new Date().getTime();
+        Inputs.sButtonClick.value += `,${sDisplayClass}`;
+        sCurrentActive = sDisplayClass;
+    }
+}
+// ----------------------------------------------------- //
+//  Function:     Register Mouse out of any button  
+// ----------------------------------------------------- //
+function newOut() {
+    HideEverything();
+    let tTime = new Date().getTime() - tTimeIn;
+    Inputs.sTimeClick.value += `,${tTime}`;
+    console.log(tTime);
+}
+
+// ----------------------------------------------------- //
+//  Function:     Hide all elements in the table  
+// ----------------------------------------------------- //
+
+function HideEverything() {
+  let lContent  = document.getElementsByClassName("cell-content");
+  let lHidden   = document.getElementsByClassName("cell-hidden");
+
+  for(let i = 0; i<lContent.length; i++) {
+    lContent[i].classList.add('hidden');
+    lHidden[i].classList.remove('hidden');
+  }
+};
+
+// ----------------------------------------------------- //
+//  Function:    Display Contents from a specific class  
+//  Inputs:
+//    - DisplayClass    : String, class combination that will be activated
+// ----------------------------------------------------- //
+
+function DisplayContent(sDisplayClass) {
+  let lCells = document.getElementsByClassName(sDisplayClass);
+  for(let i = 0; i<lCells.length; i++) {
+    let content = lCells[i].getElementsByClassName("cell-content")[0];
+    let hidden = lCells[i].getElementsByClassName("cell-hidden")[0];
+    content.classList.remove('hidden');
+    hidden.classList.add('hidden');
+  }
+};
+
+</script>
+{{ endblock }}
