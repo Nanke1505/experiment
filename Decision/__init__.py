@@ -3,7 +3,7 @@ import numpy as np
 from numpy import random 
 
 doc = """
-Your app description
+Mouselab 
 """
 
 
@@ -21,9 +21,10 @@ class C(BaseConstants):
     bShuffleOptions = True # Within-subjects (every trial)
     # Constant info about your experiment 
     lAttributes = [
-            {"name": "Attribute 1", "id": "a1", "lValues": [1,2]},
-            {"name": "Attribute 2", "id": "a2", "lValues": [3,4]},
-            {"name": "Attribute 3", "id": "a3", "lValues": [5,6]},
+            {"name": "Product", "id": "a1", "lValues": [1,2]},
+            {"name": "Price", "id": "a2", "lValues": [3,4]},
+            {"name": "Water footprint", "id": "a3", "lValues": [5,6]},
+            {"name": "Carbon footprint", "id": "a4", "lValues": [7,8]}
         ]
 
 
@@ -37,18 +38,18 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     # Variables
-    dRT             = models.FloatField()
-    sButtonClick    = models.LongStringField()
+    dRT             = models.FloatField() # non integers
+    sButtonClick    = models.LongStringField() # database is too big for string
     sTimeClick      = models.LongStringField()
-    iDec            = models.StringField()
+    iDec            = models.StringField() # text
 
 # FUNCTIONS 
 
-def creating_session(subsession):
+def creating_session(subsession): # if you do a treatment, you need to save in settings and create it here. 
     if subsession.round_number == 1:
             for player in subsession.get_players():
                 p = player.participant
-                lOrder = [0,1,2]
+                lOrder = [2,3] # make sure the first one will be the price. Thus, price and product name is fixed. 
                 random.shuffle(lOrder)
                 p.lAttOrder = lOrder              
 
@@ -60,8 +61,6 @@ def creating_session(subsession):
 
 
 # PAGES
-
-
 
 class Task(Page):
     
