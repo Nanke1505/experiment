@@ -75,6 +75,7 @@ class Task(Page):
         lAttributes = C.lAttributes[:]
         for i in range(len(lAttributes)):
             lAttributes[i]["lValues"] = vTrials[2*i:(2*i+2)]
+            # value for aType. 
         print(lAttributes)
         lOptions = [
             'Option A',

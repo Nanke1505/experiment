@@ -14,7 +14,7 @@
                 <div class="cell"> {{ attr.name }} </div>
                 {{ with outer_counter=forloop.counter }}
                 {{ for a in attr.lValues }} 
-                
+                <!-- if aType == image -- code for image. else code for value. endif.  is an image do this.. if it is not do  -->
                     <button type="button" class="cell visual-btn row-{{outer_counter}} col-{{forloop.counter}} r{{outer_counter}}c{{forloop.counter}}" id="r{{outer_counter}}c{{forloop.counter}}"> 
                         <div class="cell-content"> {{ a }} </div>
                         <div class="cell-hidden hidden">  </div>
