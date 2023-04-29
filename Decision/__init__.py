@@ -10,7 +10,7 @@ Mouselab
 class C(BaseConstants):
     NAME_IN_URL = 'MouselabTemplate'
     PLAYERS_PER_GROUP = None
-    mTrials = np.genfromtxt(f"_static/global/files/trials.csv", delimiter=',')
+    mTrials = np.genfromtxt(f"_static/global/products1.csv", delimiter=';')
     NUM_PROUNDS = 3
     NUM_ROUNDS = NUM_PROUNDS+ len(mTrials)
     # Visual tracing vars
@@ -21,10 +21,9 @@ class C(BaseConstants):
     bShuffleOptions = True # Within-subjects (every trial)
     # Constant info about your experiment 
     lAttributes = [
-            {"name": "Product", "id": "a1", "lValues": [1,2]},
-            {"name": "Price", "id": "a2", "lValues": [3,4]},
-            {"name": "Water footprint", "id": "a3", "lValues": [5,6]},
-            {"name": "Carbon footprint", "id": "a4", "lValues": [7,8]}
+            {"name": "Price", "id": "a1", "lValues": [1,2]},
+            {"name": "Carbon footprint", "id": "a2", "lValues": [3,4]},
+            {"name": "Water footprint", "id": "a3", "lValues": [5,6]}
         ]
 
 
@@ -49,7 +48,7 @@ def creating_session(subsession): # if you do a treatment, you need to save in s
     if subsession.round_number == 1:
             for player in subsession.get_players():
                 p = player.participant
-                lOrder = [2,3] # make sure the first one will be the price. Thus, price and product name is fixed. 
+                lOrder = [0,1,2] # make sure the first one will be the price. Thus, price and product name is fixed. Thus 1 is standard. 
                 random.shuffle(lOrder)
                 p.lAttOrder = lOrder              
 
@@ -71,10 +70,10 @@ class Task(Page):
     def vars_for_template(player: Player):
         p = player.participant
         print(p.mTrials)
-        vTrials = p.mTrials[player.round_number-1,:].tolist()
+        vTrials = p.mTrials[player.round_number-1,:].tolist() # lOption = vTrails[0] 
         lAttributes = C.lAttributes[:]
         for i in range(len(lAttributes)):
-            lAttributes[i]["lValues"] = vTrials[2*i:(2*i+2)]
+            lAttributes[i]["lValues"] = vTrials[2*i:(2*i+2)] # start from 3rd element
             # value for aType. 
         print(lAttributes)
         lOptions = [
