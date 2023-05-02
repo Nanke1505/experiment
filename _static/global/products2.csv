@@ -1,0 +1,20 @@
+Soy milk;Milk (Cow);2,15;1,1;carbon_2;carbon_4;water_2;water_3
+Beef-burger;Soy-burger;2,99;3,45;carbon_5;carbon_2;water_5;water_4
+Chicken;Beef;3,49;3,59;carbon_3;carbon_5;water_3;water_5
+Beef;Fish;4,35;4,89;carbon_5;carbon_3;water_5;water_3
+Zucchini;Bio-Zucchini;0,82;1,01;carbon_2;carbon_1;water_2;water_1
+Mediterranean vegetables;Seasonal vegetables;1,29;2,89;carbon_4;carbon_1;water_3;water_1
+Bio-Chocolate;Chocolate;1,75;0,65;carbon_1;carbon_3;water_5;water_4
+Banana;Orange;2,19;2,99;carbon_2;carbon_1;water_1;water_2
+Apple;Grapefruit;0,55;0,72;carbon_2;carbon_1;water_2;water_1
+Mango;Strawberry;1,75;2,79;carbon_2;carbon_1;water_2;water_1
+Eggplant;Aspargus;0,92;3,85;carbon_1;carbon_2;water_1;water_2
+Grapes;Raisins;2,75;1,95;carbon_1;carbon_2;water_1;water_2
+Tofu;Beef;2,79;4,89;carbon_2;carbon_5;water_2;water_5
+Pasta;Rice;1,55;1,65;carbon_2;carbon_3;water_2;water_3
+Coffee;Tea;3,86;1,59;carbon_2;carbon_1;water_2;water_1
+Beer;Wine;1,89;1,76;carbon_2;carbon_3;water_2;water_3
+Cheese;Chicken;2,45;2,99;carbon_4;carbon_3;water_4;water_3
+Seasonal fruit;Tropical fruit;0,97;1,63;carbon_1;carbon_2;water_1;water_2
+Cereal;Bread;3,99;2,89;carbon_3;carbon_4;water_2;water_3
+Prunes;Dried prunes;1,99;2,99;carbon_2;carbon_3;water_2;water_3

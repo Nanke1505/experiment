@@ -10,7 +10,7 @@ Mouselab
 class C(BaseConstants):
     NAME_IN_URL = 'MouselabTemplate'
     PLAYERS_PER_GROUP = None
-    mTrials = np.genfromtxt(f"_static/global/products1.csv", delimiter=';')
+    mTrials = np.genfromtxt(f"_static/global/Products1.csv", delimiter=';')
     NUM_PROUNDS = 3
     NUM_ROUNDS = NUM_PROUNDS+ len(mTrials)
     # Visual tracing vars
@@ -21,9 +21,9 @@ class C(BaseConstants):
     bShuffleOptions = True # Within-subjects (every trial)
     # Constant info about your experiment 
     lAttributes = [
-            {"name": "Price", "id": "a1", "lValues": [1,2]},
-            {"name": "Carbon footprint", "id": "a2", "lValues": [3,4]},
-            {"name": "Water footprint", "id": "a3", "lValues": [5,6]}
+            {"name": "Price", "id": "a1", "lValues": [3,4]},
+            {"name": "Carbon footprint", "id": "a2", "lValues": [5,6]},
+            {"name": "Water footprint", "id": "a3", "lValues": [7,8]}
         ]
 
 
